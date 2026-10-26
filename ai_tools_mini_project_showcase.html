@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools & Mini Project Showcase</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eep2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        darkbg: '#0f172a',
+                        darkcard: '#1e293b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-darkbg text-slate-100 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                        <i class="fa-solid me-0 fa-brain text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg tracking-tight text-white flex items-center gap-2">
+                            AI Showcase <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">v1.0</span>
+                        </h1>
+                        <p class="text-xs text-slate-400">Tools, Productivity & Mini-Project Hub</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Tabs -->
+                <nav class="hidden md:flex space-x-1" id="desktop-nav">
+                    <button onclick="switchTab('explorer')" data-tab="explorer" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 text-indigo-400 bg-indigo-500/10 border border-indigo-500/30">
+                        <i class="fa-solid fa-compass"></i>
+                        <span>1. Tools Explorer</span>
+                    </button>
+                    <button onclick="switchTab('playground')" data-tab="playground" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-code"></i>
+                        <span>2. Coding Assist</span>
+                    </button>
+                    <button onclick="switchTab('miniproject')" data-tab="miniproject" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>3. Mini-Project App</span>
+                    </button>
+                    <button onclick="switchTab('linkedin')" data-tab="linkedin" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-brands fa-linkedin"></i>
+                        <span>4. LinkedIn Sharer</span>
+                    </button>
+                </nav>
+
+                <!-- Status indicator -->
+                <div class="hidden sm:flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700/60 text-xs">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-slate-300">Gemini 3 Flash API Active</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Tabs -->
+        <div class="md:hidden border-t border-slate-800 px-2 py-2 flex overflow-x-auto space-x-1" id="mobile-nav">
+            <button onclick="switchTab('explorer')" data-tab="explorer" class="nav-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium text-indigo-400 bg-indigo-500/10">1. Explorer</button>
+            <button onclick="switchTab('playground')" data-tab="playground" class="nav-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400">2. Coding Assist</button>
+            <button onclick="switchTab('miniproject')" data-tab="miniproject" class="nav-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400">3. Mini-Project</button>
+            <button onclick="switchTab('linkedin')" data-tab="linkedin" class="nav-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400">4. LinkedIn Post</button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ==================== TAB 1: AI TOOLS EXPLORER ==================== -->
+        <section id="tab-explorer" class="tab-content space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-800/50">Objective 1</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Explore Modern AI Ecosystems</h2>
+                <p class="text-slate-400 text-sm sm:text-base">Understand the core strengths, key features, and optimal developer use-cases for the leading generative AI assistants.</p>
+            </div>
+
+            <!-- Comparison Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- ChatGPT -->
+                <div class="bg-darkcard border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                                <i class="fa-solid fa-robot text-2xl"></i>
+                            </div>
+                            <span class="text-xs font-mono text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full">OpenAI</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">ChatGPT</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Best-in-class general reasoning, creative writing, and step-by-step logic breakdown.</p>
+                        
+                        <div class="space-y-2 pt-2">
+                            <h4 class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Key Strengths</h4>
+                            <ul class="text-xs text-slate-400 space-y-1.5">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Complex logical reasoning & math</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Custom GPT creation & instructions</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Code debugging & architecture</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800">
+                        <span class="text-xs text-indigo-400 font-medium">Best For: Conceptual reasoning & code review</span>
+                    </div>
+                </div>
+
+                <!-- Gemini -->
+                <div class="bg-darkcard border border-indigo-500/40 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between glow-effect group relative">
+                    <div class="absolute -top-3 right-6 bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider shadow">Active in App</div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+                                <i class="fa-solid fa-sparkles text-2xl"></i>
+                            </div>
+                            <span class="text-xs font-mono text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full">Google</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">Gemini 3 Flash</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Ultra-fast multimodal execution with native web search grounding and structured API responses.</p>
+                        
+                        <div class="space-y-2 pt-2">
+                            <h4 class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Key Strengths</h4>
+                            <ul class="text-xs text-slate-400 space-y-1.5">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-400"></i> Massive context windows (1M+ tokens)</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-400"></i> Real-time Google Search grounding</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-400"></i> Native Audio & Multimodal generation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800">
+                        <span class="text-xs text-indigo-400 font-medium">Best For: Research, multimodal apps & fast REST APIs</span>
+                    </div>
+                </div>
+
+                <!-- Copilot -->
+                <div class="bg-darkcard border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                                <i class="fa-solid fa-code-branch text-2xl"></i>
+                            </div>
+                            <span class="text-xs font-mono text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full">Microsoft / GitHub</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">Microsoft Copilot</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Integrated developer autocomplete and workplace ecosystem productivity agent.</p>
+                        
+                        <div class="space-y-2 pt-2">
+                            <h4 class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Key Strengths</h4>
+                            <ul class="text-xs text-slate-400 space-y-1.5">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Deep VS Code & IDE integration</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Context-aware autocomplete & inline edits</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Enterprise security & doc synthesis</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800">
+                        <span class="text-xs text-indigo-400 font-medium">Best For: Inline code completion & daily enterprise workflow</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Comparison Matrix -->
+            <div class="bg-darkcard border border-slate-800 rounded-2xl p-6 space-y-4">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-table-list text-indigo-400"></i> Feature Matrix Comparison
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-300">
+                        <thead class="bg-slate-900/60 text-xs text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                            <tr>
+                                <th class="p-3">Feature Category</th>
+                                <th class="p-3">ChatGPT</th>
+                                <th class="p-3">Gemini 3 Flash</th>
+                                <th class="p-3">Microsoft Copilot</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800 text-xs sm:text-sm">
+                            <tr class="hover:bg-slate-800/40">
+                                <td class="p-3 font-medium text-slate-200">Code Refactoring</td>
+                                <td class="p-3 text-emerald-400">★★★★★ High</td>
+                                <td class="p-3 text-emerald-400">★★★★★ High</td>
+                                <td class="p-3 text-indigo-400">★★★★☆ Very Good</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40">
+                                <td class="p-3 font-medium text-slate-200">IDE Integration</td>
+                                <td class="p-3 text-slate-400">★★★☆☆ Web/Extension</td>
+                                <td class="p-3 text-slate-400">★★★☆☆ Web/API</td>
+                                <td class="p-3 text-emerald-400">★★★★★ Native IDE</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40">
+                                <td class="p-3 font-medium text-slate-200">Context Window</td>
+                                <td class="p-3 text-indigo-400">128k Tokens</td>
+                                <td class="p-3 text-emerald-400">1M+ Tokens (Industry Lead)</td>
+                                <td class="p-3 text-indigo-400">Variable / File-level</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40">
+                                <td class="p-3 font-medium text-slate-200">Live Search Grounding</td>
+                                <td class="p-3 text-indigo-400">Supported</td>
+                                <td class="p-3 text-emerald-400">Native Google Search</td>
+                                <td class="p-3 text-indigo-400">Bing Search Grounded</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TAB 2: CODING & PRODUCTIVITY PLAYGROUND ==================== -->
+        <section id="tab-playground" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-800/50">Objective 2</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Coding & Productivity Assist</h2>
+                <p class="text-slate-400 text-sm sm:text-base">Test live AI capabilities: analyze complex code snippets, convert between programming languages, and refine prompts.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Tool 1: Code Converter & Explainer -->
+                <div class="bg-darkcard border border-slate-800 rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-code text-indigo-400"></i> AI Code Converter & Explainer
+                            </h3>
+                            <span class="text-xs text-slate-400">Gemini Powered</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Paste code to get a line-by-line explanation and translate it into another language.</p>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Target Language</label>
+                            <select id="target-lang" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                                <option value="Python">Python</option>
+                                <option value="JavaScript">JavaScript</option>
+                                <option value="TypeScript">TypeScript</option>
+                                <option value="C++">C++</option>
+                                <option value="Rust">Rust</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Source Code Input</label>
+                            <textarea id="code-input" rows="5" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs font-mono text-indigo-200 focus:outline-none focus:border-indigo-500 placeholder-slate-600" placeholder="Paste your code snippet here..."></textarea>
+                        </div>
+
+                        <button onclick="processCodeAssist()" id="code-btn" class="w-full py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-wand-magic"></i>
+                            <span>Convert & Explain Code</span>
+                        </button>
+                    </div>
+
+                    <!-- Code Output Area -->
+                    <div class="mt-4 pt-4 border-t border-slate-800 space-y-2">
+                        <label class="block text-xs font-medium text-slate-400">AI Response Output</label>
+                        <div id="code-output" class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono text-slate-300 min-h-[140px] max-h-[250px] overflow-y-auto whitespace-pre-wrap">
+                            Click "Convert & Explain" to generate results...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 2: Prompt Engineering & Research Optimizer -->
+                <div class="bg-darkcard border border-slate-800 rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-lightbulb text-violet-400"></i> Prompt Refiner & Optimizer
+                            </h3>
+                            <span class="text-xs text-slate-400">Productivity Booster</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Turn simple context-less prompts into rich, high-performing system prompts for research and coding.</p>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Basic Prompt / Research Query</label>
+                            <textarea id="prompt-input" rows="5" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 placeholder-slate-600" placeholder="e.g. Explain quantum computing simply, or write a python script for scraping news headlines..."></textarea>
+                        </div>
+
+                        <button onclick="optimizePrompt()" id="prompt-btn" class="w-full py-2.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white font-medium text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>Optimize Prompt</span>
+                        </button>
+                    </div>
+
+                    <!-- Prompt Output Area -->
+                    <div class="mt-4 pt-4 border-t border-slate-800 space-y-2">
+                        <label class="block text-xs font-medium text-slate-400">Refined Master Prompt</label>
+                        <div id="prompt-output" class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-sans text-slate-300 min-h-[140px] max-h-[250px] overflow-y-auto whitespace-pre-wrap">
+                            Optimized prompt structure will appear here...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TAB 3: AI-POWERED MINI PROJECT SHOWCASE ==================== -->
+        <section id="tab-miniproject" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-800/50">Objective 3</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">AI Text Summarizer & Sentiment Analyzer</h2>
+                <p class="text-slate-400 text-sm sm:text-base">An interactive mini-application built with JavaScript and Gemini API to analyze lengthy text, extract core insights, and detect emotional tone.</p>
+            </div>
+
+            <!-- Mini App Container -->
+            <div class="bg-darkcard border border-indigo-500/30 rounded-2xl p-6 sm:p-8 space-y-6 glow-effect">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-brain text-indigo-400"></i> Smart Text Analyzer Engine
+                        </h3>
+                        <p class="text-xs text-slate-400">Input any article, study notes, or product review below.</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="loadSampleText('tech')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 transition">Sample 1: Tech</button>
+                        <button onclick="loadSampleText('feedback')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 transition">Sample 2: Review</button>
+                    </div>
+                </div>
+
+                <!-- Input Textarea -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Source Text Content</label>
+                    <textarea id="analyzer-input" rows="6" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 placeholder-slate-600 leading-relaxed" placeholder="Paste your text here (minimum 20 words for best results)..."></textarea>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex flex-col sm:flex-row items-center gap-3">
+                    <button onclick="runTextAnalysis()" id="analyze-btn" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition-all duration-200 flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Analyze Text with AI</span>
+                    </button>
+                    <button onclick="clearAnalyzer()" class="w-full sm:w-auto px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 font-medium text-sm transition">
+                        Clear
+                    </button>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div id="analyzer-loader" class="hidden text-center py-8 space-y-3">
+                    <div class="inline-block w-8 h-8 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin"></div>
+                    <p class="text-xs text-indigo-300 font-medium animate-pulse">Analyzing text context & computing sentiment tone...</p>
+                </div>
+
+                <!-- Results Section -->
+                <div id="analyzer-results" class="hidden space-y-6 pt-4 border-t border-slate-800">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Sentiment Metric -->
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
+                            <span class="text-xs text-slate-400 uppercase font-semibold">Detected Tone / Sentiment</span>
+                            <div id="result-sentiment-badge" class="flex items-center space-x-2 text-lg font-bold">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Reading Time Metric -->
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
+                            <span class="text-xs text-slate-400 uppercase font-semibold">Word Count & Reading Time</span>
+                            <div id="result-stats" class="text-lg font-bold text-white">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Key Keywords -->
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
+                            <span class="text-xs text-slate-400 uppercase font-semibold">Core Keywords</span>
+                            <div id="result-keywords" class="flex flex-wrap gap-1.5">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Executive Summary Box -->
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5 space-y-3">
+                        <h4 class="text-sm font-bold text-indigo-400 flex items-center gap-2">
+                            <i class="fa-solid fa-compress text-indigo-400"></i> Executive AI Summary
+                        </h4>
+                        <div id="result-summary" class="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TAB 4: LINKEDIN POST GENERATOR ==================== -->
+        <section id="tab-linkedin" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-800/50">Objective 4</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Share Your Learning Journey</h2>
+                <p class="text-slate-400 text-sm sm:text-base">Document your progress! Customize your achievements and generate a professional LinkedIn post ready to share.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <!-- Post Editor Controls -->
+                <div class="bg-darkcard border border-slate-800 rounded-2xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-indigo-400"></i> Customize Post Details
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Your Name</label>
+                            <input type="text" id="post-name" value="Alex Developer" oninput="updateLinkedInPreview()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Project Name</label>
+                            <input type="text" id="post-project" value="AI Text Summarizer & Sentiment Analyzer" oninput="updateLinkedInPreview()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Tools & Technologies Used</label>
+                            <input type="text" id="post-tech" value="JavaScript, Gemini 3 Flash API, Tailwind CSS" oninput="updateLinkedInPreview()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Key Takeaways / Learnings</label>
+                            <textarea id="post-learnings" rows="3" oninput="updateLinkedInPreview()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">Prompting precision is essential for JSON outputs. AI accelerates development by turning complex NLP tasks into simple REST API calls.</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live LinkedIn Card Preview -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Live LinkedIn Card Preview</h3>
+                        <button onclick="copyLinkedInPost()" id="copy-btn" class="px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs transition flex items-center gap-2">
+                            <i class="fa-solid fa-copy"></i>
+                            <span id="copy-text">Copy Post Text</span>
+                        </button>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 space-y-4 shadow-xl">
+                        <!-- LinkedIn Header Mockup -->
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-white text-sm" id="avatar-initials">
+                                AD
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-white" id="preview-name">Alex Developer</h4>
+                                <p class="text-[11px] text-slate-400">Software Engineer & AI Enthusiast • 1m</p>
+                            </div>
+                        </div>
+
+                        <!-- Post Body Preview -->
+                        <div class="text-xs sm:text-sm text-slate-200 space-y-3 leading-relaxed font-sans border-t border-slate-800 pt-3" id="linkedin-preview-content">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-6 bg-slate-900/40 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+            <p>AI Tools & Mini Project Showcase App • Powered by Gemini 3 Flash API</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Default API key setup for Canvas Gemini API execution
+        const API_KEY = "";
+
+        // Sample text datasets for Tab 3
+        const SAMPLES = {
+            tech: `Artificial intelligence has evolved rapidly over the past decade. Deep learning frameworks have enabled remarkable breakthroughs in computer vision, natural language processing, and automated reasoning. Today, large language models like Gemini allow developers to construct intelligent agents, text processing suites, and automated workflow pipelines in a fraction of the time. However, building reliable AI systems still requires careful prompt engineering, strong API error handling, and robust software architecture. Developers must strike a balance between creative generation and accurate, grounded responses.`,
+            feedback: `I recently upgraded to the new pro model software subscription and I am thoroughly impressed! The user interface is sleek, responsive, and intuitive. Processing speeds have improved by almost 50%, and the new automated workflow features saved our team at least 10 hours of manual work this week alone. On the downside, customer support was a bit slow to respond to my initial setup inquiry, but overall this tool has completely transformed our project productivity!`
+        };
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Show selected tab
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            // Update Desktop Nav Buttons
+            document.querySelectorAll('#desktop-nav .nav-btn').forEach(btn => {
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 text-indigo-400 bg-indigo-500/10 border border-indigo-500/30";
+                } else {
+                    btn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-all duration-200 flex items-center space-x-2";
+                }
+            });
+
+            // Update Mobile Nav Buttons
+            document.querySelectorAll('#mobile-nav .nav-btn').forEach(btn => {
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.className = "nav-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium text-indigo-400 bg-indigo-500/10 border border-indigo-500/30";
+                } else {
+                    btn.className = "nav-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400";
+                }
+            });
+
+            if (tabId === 'linkedin') {
+                updateLinkedInPreview();
+            }
+        }
+
+        // Exponential backoff fetch wrapper for Gemini API calls
+        async function fetchGeminiWithBackoff(payload, retries = 3, delay = 1000) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${API_KEY}`;
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (response.ok) {
+                        return await response.json();
+                    }
+                } catch (err) {
+                    // Retry silently on failure
+                }
+                await new Promise(res => setTimeout(res, delay * Math.pow(2, i)));
+            }
+            throw new Error('API Request Failed after retries');
+        }
+
+        // TAB 2: Process Code Conversion & Explanation
+        async function processCodeAssist() {
+            const inputCode = document.getElementById('code-input').value.trim();
+            const targetLang = document.getElementById('target-lang').value;
+            const outputDiv = document.getElementById('code-output');
+            const btn = document.getElementById('code-btn');
+
+            if (!inputCode) {
+                outputDiv.innerText = "Please paste some source code first!";
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Processing...</span>`;
+            outputDiv.innerText = "Analyzing code architecture and translating...";
+
+            const prompt = `Act as an expert software architect. Analyze the following code snippet:
+1. Provide a brief 2-sentence explanation of what it does.
+2. Convert the code into ${targetLang}.
+
+Code:
+${inputCode}`;
+
+            const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+            try {
+                const data = await fetchGeminiWithBackoff(payload);
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Unable to parse response.";
+                outputDiv.innerText = text;
+            } catch (err) {
+                outputDiv.innerText = "Error processing request. Please try again.";
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-wand-magic"></i> <span>Convert & Explain Code</span>`;
+            }
+        }
+
+        // TAB 2: Optimize Prompt Engineering
+        async function optimizePrompt() {
+            const rawPrompt = document.getElementById('prompt-input').value.trim();
+            const outputDiv = document.getElementById('prompt-output');
+            const btn = document.getElementById('prompt-btn');
+
+            if (!rawPrompt) {
+                outputDiv.innerText = "Please enter a simple prompt query to optimize!";
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Refining...</span>`;
+            outputDiv.innerText = "Refining prompt with role, context, and output constraints...";
+
+            const systemPrompt = "You are a prompt engineering specialist. Take the user's basic prompt and turn it into a high-performing Master Prompt including Persona, Context, Constraints, and Output Format.";
+            const payload = {
+                contents: [{ parts: [{ text: `Optimize this prompt: "${rawPrompt}"` }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const data = await fetchGeminiWithBackoff(payload);
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Unable to optimize prompt.";
+                outputDiv.innerText = text;
+            } catch (err) {
+                outputDiv.innerText = "Error refining prompt. Please try again.";
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-bolt"></i> <span>Optimize Prompt</span>`;
+            }
+        }
+
+        // TAB 3: Load Sample Text into Mini App
+        function loadSampleText(type) {
+            if (SAMPLES[type]) {
+                document.getElementById('analyzer-input').value = SAMPLES[type];
+            }
+        }
+
+        function clearAnalyzer() {
+            document.getElementById('analyzer-input').value = '';
+            document.getElementById('analyzer-results').classList.add('hidden');
+        }
+
+        // TAB 3: Run Text Summarizer & Sentiment Analyzer via Structured JSON
+        async function runTextAnalysis() {
+            const textInput = document.getElementById('analyzer-input').value.trim();
+            const loader = document.getElementById('analyzer-loader');
+            const resultsArea = document.getElementById('analyzer-results');
+            const btn = document.getElementById('analyze-btn');
+
+            if (textInput.length < 15) {
+                alert("Please enter a longer text snippet (at least 15 characters) for meaningful analysis.");
+                return;
+            }
+
+            btn.disabled = true;
+            loader.classList.remove('hidden');
+            resultsArea.classList.add('hidden');
+
+            const payload = {
+                contents: [{ parts: [{ text: `Analyze this text:\n"${textInput}"` }] }],
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            sentiment: { type: "STRING", description: "Positive, Negative, or Neutral" },
+                            summary: { type: "STRING", description: "Concise 2-3 sentence executive summary" },
+                            keywords: { 
+                                type: "ARRAY", 
+                                items: { type: "STRING" },
+                                description: "Top 4 important keywords extracted from the text" 
+                            }
+                        },
+                        propertyOrdering: ["sentiment", "summary", "keywords"]
+                    }
+                }
+            };
+
+            try {
+                const data = await fetchGeminiWithBackoff(payload);
+                const rawJson = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                const parsed = JSON.parse(rawJson);
+
+                // Populate UI Metrics
+                const wordCount = textInput.split(/\s+/).filter(Boolean).length;
+                const readTime = Math.max(1, Math.ceil(wordCount / 200));
+
+                document.getElementById('result-stats').innerHTML = `<span class="text-indigo-400">${wordCount} words</span> <span class="text-xs text-slate-400 font-normal">(~${readTime} min read)</span>`;
+
+                // Sentiment Badge Styling
+                const sentimentBadge = document.getElementById('result-sentiment-badge');
+                const sentiment = parsed.sentiment.toLowerCase();
+                if (sentiment.includes('positive')) {
+                    sentimentBadge.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i> <span class="text-emerald-400">Positive</span>`;
+                } else if (sentiment.includes('negative')) {
+                    sentimentBadge.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-rose-400"></i> <span class="text-rose-400">Negative</span>`;
+                } else {
+                    sentimentBadge.innerHTML = `<i class="fa-solid fa-circle-info text-amber-400"></i> <span class="text-amber-400">Neutral</span>`;
+                }
+
+                // Keywords
+                const keywordsContainer = document.getElementById('result-keywords');
+                keywordsContainer.innerHTML = (parsed.keywords || []).map(kw => 
+                    `<span class="bg-indigo-950 text-indigo-300 border border-indigo-800/60 px-2 py-0.5 rounded text-xs">${kw}</span>`
+                ).join(' ');
+
+                // Executive Summary
+                document.getElementById('result-summary').innerText = parsed.summary;
+
+                resultsArea.classList.remove('hidden');
+            } catch (err) {
+                alert("Analysis failed. Please try again.");
+            } finally {
+                loader.classList.add('hidden');
+                btn.disabled = false;
+            }
+        }
+
+        // TAB 4: Update Live LinkedIn Preview
+        function updateLinkedInPreview() {
+            const name = document.getElementById('post-name').value || "Alex Developer";
+            const project = document.getElementById('post-project').value || "AI Mini App";
+            const tech = document.getElementById('post-tech').value || "JavaScript & AI APIs";
+            const learnings = document.getElementById('post-learnings').value || "Prompt engineering and API integration.";
+
+            // Update Name & Avatar Initials
+            document.getElementById('preview-name').innerText = name;
+            const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            document.getElementById('avatar-initials').innerText = initials || "AD";
+
+            // Format Post HTML
+            const postHTML = `
+                <p>🚀 <strong>Excited to share my latest mini-project: ${project}!</strong></p>
+                <p>Over the past few days, I’ve been diving into modern AI tools like ChatGPT, Gemini, and Microsoft Copilot to learn how AI can supercharge coding efficiency, research, and daily workflow.</p>
+                <p>To put my learnings into practice, I built <strong>${project}</strong> using <strong>${tech}</strong>!</p>
+                <p>💡 <strong>Key Learning Takeaway:</strong><br>${learnings}</p>
+                <p class="text-indigo-400 font-medium">#ArtificialIntelligence #WebDev #JavaScript #LearningJourney #BuildInPublic</p>
+            `;
+
+            document.getElementById('linkedin-preview-content').innerHTML = postHTML;
+        }
+
+        // TAB 4: Copy Post Content
+        function copyLinkedInPost() {
+            const container = document.getElementById('linkedin-preview-content');
+            // Extract plain text for copy action
+            const plainText = container.innerText;
+
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.value = plainText;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempTextArea);
+
+            const copyBtnText = document.getElementById('copy-text');
+            copyBtnText.innerText = "Copied to Clipboard!";
+            setTimeout(() => {
+                copyBtnText.innerText = "Copy Post Text";
+            }, 2000);
+        }
+
+        // Initialize default preview state on window load
+        window.onload = function() {
+            updateLinkedInPreview();
+        };
+    </script>
+</body>
+</html>
